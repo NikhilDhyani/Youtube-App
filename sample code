@@ -1,0 +1,36 @@
+//Initialising module.
+
+var https = require("https");
+
+//Initialised body variable.
+
+var body="";
+
+//Making get request to youtube using youtube api.
+https.get("https://www.googleapis.com/youtube/v3/videos?id=videoId&key=YourApiKey & part=snippet,contentDetails,statistics,status",function(response)
+          { 
+            response.on("data",function(chunk)
+                        {
+                          body+=chunk;
+                        })
+                        // Using "end" so that we get entire body(data).
+            response.on("end",function()
+                         {  
+                         //Converting content into JSON and storing in the variable called content.
+                            var content = JSON.parse(body);
+                            //Prints the entire body
+                           console.log(content);
+                      // You can print specific data from the entire data like page  info, statistic, etc. You can modify it according to you. 
+                           console.log(content.kind);
+                           
+                           console.log("PAGE INFO:"); console.log(content.pageInfo);
+                           console.log("Statistics Of This Channel " ); console.log(content.items[0].statistics);
+                          
+                         
+                           
+                          
+                          
+                         }
+                        )
+          }
+         );
